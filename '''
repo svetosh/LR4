@@ -1,0 +1,125 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+void Merg(int a[], int begin, int end)
+{
+	int i = begin,
+		mid = begin + (end - begin) / 2,
+		j = mid + 1,
+		k = 0,
+		b[100];
+
+	while (i <= mid && j <= end) {
+		if (a[i] <= a[j]) {
+			b[k] = a[i]; i++;
+		}
+		else {
+			b[k] = a[j]; j++;
+		}
+		k++;
+	}
+
+	while (i <= mid)
+	{
+		b[k] = a[i];
+		i++;
+		k++;
+	}
+
+	while (j <= end)
+	{
+		b[k] = a[j];
+		j++;
+		k++;
+	}
+
+	for (i = 0; i < k; i++)
+		a[begin + i] = b[i];
+}
+
+void MergSort(int* a, int left, int right) 
+{
+	int first = 0;
+	if(left < right)
+		if (right - left == 1) {
+			if (a[left] > a[right]) {
+				first = a[left];
+				a[left] = a[right];
+				a[right] = first;
+			}
+		}
+		else {
+			MergSort(a, left, left + (right - left) / 2);
+			MergSort(a, left + (right - left) / 2 + 1, right);
+			Merg(a, left, right);
+		}
+		
+}
+
+
+
+int main()
+{
+    int a[30]; 
+	cout << "ishodniy massiv: ";
+	for (int i = 0; i < 30; ++i) {
+		a[i] = rand() % 201 - 100;
+		cout << a[i] << " ";
+	}
+	cout << endl;
+
+	for (int i = 1; i < 30; ++i)
+	{
+		for (int j = 0; j < 30 - i; j++)
+		{
+			if (a[j] > a[j + 1])
+			{
+				int fist = a[j];
+				a[j] = a[j + 1];
+				a[j + 1] = fist;
+			}
+		}
+	}
+
+	/* Выведем отсортированный массив */
+	cout << "otsortirovanniy massiv Bublle: ";
+	for (int i = 0; i < 30; ++i)
+	{
+		cout << a[i] << " ";
+	}
+	cout << endl;
+
+	/////////////////////////////////
+
+	int naim = 0; 
+	for (int i = 0; i < 30; i++)
+	{
+		naim = i;
+		for (int j = i + 1; j < 30; j++)
+			naim = (a[j] < a[naim]) ? j : naim;
+		if (i != naim)
+		{
+			int first = a[i];
+			a[i] = a[naim];
+			a[naim] = first;
+		}
+	}
+	//Вывод отсортированного массива
+	cout << "otsortirovanniy massiv Selection: ";
+	for (int i = 0; i < 30; i++) 
+		cout << a[i] << " ";
+	cout << endl;
+
+	/////////////////////////////////
+
+	MergSort(a, 0, 29);
+
+	cout << "otsortirovanniy massiv Merge: ";
+	for (int i = 0; i < 30; i++)
+		cout << a[i] << " ";
+	cout << endl;
+
+
+    return 0;
+}
