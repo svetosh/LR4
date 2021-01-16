@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <ctime>
 #include <vector>
 using namespace std;
@@ -11,11 +11,11 @@ void print_vec(vector<int>& vec)
 	cout << endl;
 }
 
-void bubble(vector<int>& vec)
+void bubble(vector<int>& vec, int size)
 {
-	for (int i = 1; i < 30; ++i)
+	for (int i = 1; i < size; ++i)
 	{
-		for (int j = 0; j < 30 - i; j++)
+		for (int j = 0; j < size - i; j++)
 		{
 			if (vec[j] < vec[j + 1])
 			{
@@ -27,13 +27,13 @@ void bubble(vector<int>& vec)
 	}
 }
 
-void selection(vector<int>& vec)
+void selection(vector<int>& vec, int size)
 {
 	int naim = 0;
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < size; i++)
 	{
 		naim = i;
-		for (int j = i + 1; j < 30; j++)
+		for (int j = i + 1; j < size; j++)
 			naim = (vec[j] < vec[naim]) ? j : naim;
 		if (i != naim)
 		{
@@ -86,7 +86,7 @@ void MergSort(vector<int>& vec, int left, int right)
 	if (left < right)
 		if (right - left == 1) {
 			if (vec[left] > vec[right]) {
-				first = vec[left]; 
+				first = vec[left];
 				vec[left] = vec[right];
 				vec[right] = first;
 			}
@@ -105,24 +105,27 @@ int main()
 {
 	setlocale(LC_ALL, "ru");
 	vector<int> mainvec;
-	vector<int> vecForMerge = mainvec;
+	int size;
+	cout << "Введите длину массива: " << endl;
+	cin >> size;
 	cout << "Массив для сортировки: ";
 	srand(time(nullptr));
-	for (int i = 0; i < 30; ++i) {
+	for (int i = 0; i < size; ++i) {
 		mainvec.push_back(rand() % 201 - 100);
 	}
+	vector<int> vecForMerge = mainvec;
 	print_vec(mainvec);
 	cout << endl
 		<< "Массив отсортированный Bubble'ом: ";
-	bubble(mainvec);
+	bubble(mainvec, mainvec.size());
 	print_vec(mainvec);
-	cout << endl 
-		 << "Массив отсортированный selection'ом: ";
-	selection(mainvec);
+	cout << endl
+		<< "Массив отсортированный selection'ом: ";
+	selection(mainvec, mainvec.size());
 	print_vec(mainvec);
-	cout << endl 
-		 << "Массив отсортированный Mergе'ом: ";
-	MergSort(mainvec, 0, mainvec.size() - 1);
-	print_vec(mainvec);
+	cout << endl
+		<< "Массив отсортированный Mergе'ом: ";
+	MergSort(vecForMerge, 0, vecForMerge.size() - 1);
+	print_vec(vecForMerge);
 	return 0;
 }
