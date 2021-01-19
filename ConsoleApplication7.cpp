@@ -46,11 +46,11 @@ void selection(vector<int>& vec, int size)
 
 void Merg(vector<int>& vec, int begin, int end)
 {
-	int i = begin,
+	long int i = begin,
 		mid = begin + (end - begin) / 2,
 		j = mid + 1,
-		k = 0,
-		b[100];
+		k = 0;
+		vector<int> b = vec;
 
 	while (i <= mid && j <= end) {
 		if (vec[i] <= vec[j]) {
@@ -99,8 +99,6 @@ void MergSort(vector<int>& vec, int left, int right)
 
 }
 
-
-
 int main()
 {
 	setlocale(LC_ALL, "ru");
@@ -113,7 +111,6 @@ int main()
 	for (int i = 0; i < size; ++i) {
 		mainvec.push_back(rand() % 201 - 100);
 	}
-	vector<int> vecForMerge = mainvec;
 	print_vec(mainvec);
 	cout << endl
 		<< "Массив отсортированный Bubble'ом: ";
@@ -123,9 +120,21 @@ int main()
 		<< "Массив отсортированный selection'ом: ";
 	selection(mainvec, mainvec.size());
 	print_vec(mainvec);
+	cout << endl;
+
+	vector<int> vec2;
+	int size2;
+	cout << "Введите длину массива, который будет сортироваться Mergе'ом: " << endl;
+	cin >> size2;
+	cout << "Массив для сортировки: ";
+	srand(time(nullptr));
+	for (int i = 0; i < size2; ++i) {
+		vec2.push_back(rand() % 201 - 100);
+	}
+	print_vec(vec2);
 	cout << endl
 		<< "Массив отсортированный Mergе'ом: ";
-	MergSort(vecForMerge, 0, vecForMerge.size() - 1);
-	print_vec(vecForMerge);
+	MergSort(vec2, 0, vec2.size() - 1);
+	print_vec(vec2);
 	return 0;
 }
